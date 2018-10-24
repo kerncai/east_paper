@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block  title %}人脸核身{% endblock %}
+{% block header-css %}
+
+{% load bootstrap3 %}
+{% endblock %}
+
+
+{% block  page-content %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>人脸核身详情</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index.html">主页</a>
+                </li>
+                <li>
+                     <a href="{% url    'face:face_core_body_list' %}" >人脸核身</a>
+                </li>
+                <li class="active">
+                    <strong>人脸核身详情</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a class="text-center"><i class="fa fa-laptop"></i>人脸核身详情</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="col-sm-6" style="padding-left: 0">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label"><b>{{ upload_table.image_name }}</b></span>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                        </ul>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td style=" border-top: none !important;" width="20%">图片名称:</td>
+                                            <td style=" border-top: none !important;"><b>{{ upload_table.image_name }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">上传者:</td>
+                                            <td><b>{{ upload_table.upload_name }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">识别动作:</td>
+                                            <td><b>{% ifequal upload_table.face_action_type 2 %} 
+                                            人脸核身 {% endifequal %} </b></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td width="20%">上传时间:</td>
+                                            <td><b>{{ upload_table.ctime }}</b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%" class="center">图片:</td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <table class="table">
+                                        <tr>
+                                            <td class="center">
+                                            <img src="{{MEDIA_URL}}{{upload_table.face_image_path1}}" width="420" height="500">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6" style="padding-left: 0;padding-right: 0">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <i class="fa fa-info-circle"></i> 检测结果
+                                </div>
+                                <div class="ibox-content">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td style=" border-top: none !important;" width="20%">执行者:</td>
+                                            <td style=" border-top: none !important;"><b>{{ results_table.face_action_user }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">姓名:</td>
+                                            <td><b>{{ results_table.face_id_card_name }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">身份证号码:</td>
+                                            <td><b>{{ results_table.face_id_card }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">识别结果:</td>
+                                            <td><b>{% if  results_table.face_similarity > 75 %} 
+                                                身份核实通过
+                                                {% else %} 身份核实失败，照片和身份证信息不一致 {% endif %}</b> 
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">检测结果:</td>
+                                            <td><b>{% ifequal results_table.face_core_body_results_status 1 %} 检测完成
+                                                {% else %} 检测暂未完成，请稍后 {% endifequal %}</b>
+                                            </td>
+                                        </tr>
+                            
+                                        <tr>
+                                            <td width="20%">完成时间:</td>
+                                            <td><b>{{ results_table.ctime }} </b>
+                                            </td>
+                                        </tr>
+                                        <tr></tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% block footer-js %}
+
+
+        <script>
+
+
+
+        </script>
+
+
+    {% endblock %}
+
+
+{% endblock %}
+
+

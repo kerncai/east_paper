@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+{% block  title %}人脸检测{% endblock %}
+{% block header-css %}
+
+{% load bootstrap3 %}
+{% endblock %}
+
+
+{% block  page-content %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>人脸检测详情</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index.html">主页</a>
+                </li>
+                <li>
+                     <a href="{% url    'face:face_check_list' %}" >人脸检测</a>
+                </li>
+                <li class="active">
+                    <strong>人脸检测详情</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="panel-options">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a class="text-center"><i class="fa fa-laptop"></i>人脸检测详情</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="col-sm-6" style="padding-left: 0">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <span class="label"><b>{{ upload_table.image_name }}</b></span>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                        </ul>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td style=" border-top: none !important;" width="20%">图片名称:</td>
+                                            <td style=" border-top: none !important;"><b>{{ upload_table.image_name }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">上传者:</td>
+                                            <td><b>{{ upload_table.upload_name }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">识别动作:</td>
+                                            <td><b>{% ifequal upload_table.face_action_type  0 %} 
+                                            人脸识别 {% endifequal %} </b></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td width="20%">上传时间:</td>
+                                            <td><b>{{ upload_table.ctime }}</b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%" class="center">图片:</td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <table class="table">
+                                        <tr>
+                                            <td class="center">
+                                            <img src="{{MEDIA_URL}}{{upload_table.face_image_path1}}" width="420" height="500">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-5" style="padding-left: 0;padding-right: 0">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <i class="fa fa-info-circle"></i> 检测结果
+                                </div>
+                                <div class="ibox-content">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td style=" border-top: none !important;" width="20%">执行者:</td>
+                                            <td style=" border-top: none !important;"><b>{{ results_table.face_action_user }}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">性别:</td>
+                                            <td>
+                                            <b>{% if results_table.face_check_gender < 50 %} 女
+                                            {% elif results_table.face_check_gender > 50 %} 男
+                                            {% else %} (⊙o⊙)…,人妖？？？
+                                            {% endif %}
+                                            </b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">年龄:</td>
+                                            <td><b>{{ results_table.face_check_age }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">笑容:</td>
+                                            <td><b>{{ results_table.face_check_expression }} | 0(normal)~50(smile)~100(laugh)}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">特征:</td>
+                                            <td><b>{% ifequal results_table.face_check_glass 'True' %} 戴眼镜 
+                                                {% else %} 不戴眼镜 {% endifequal %}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">颜值魅力:</td>
+                                            <td><b>{{ results_table.face_check_beauty }}</b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">左右偏移:</td>
+                                            <td><b>{% if  results_table.face_check_pitch < 0 %} 
+                                                {{ results_table.face_check_pitch }} | 脸部左偏
+                                                {% else %} {{ results_table.face_check_pitch }} | 脸部右偏{% endif %}</b> 
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">上下偏移:</td>
+                                            <td><b>{% if  results_table.face_check_pitch < 0 %} 
+                                                {{ results_table.face_check_pitch }} | 脸部上偏
+                                                {% else %} {{ results_table.face_check_yaw }} | 脸部下偏{% endif %}</b> 
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">照片内脸部宽度:</td>
+                                            <td><b>{{ results_table.face_check_width }} </b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">照片内脸部高度:</td>
+                                            <td><b>{{ results_table.face_check_height }} </b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">照片宽度:</td>
+                                            <td><b>{{ results_table.face_check_image_width }} </b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">照片高度:</td>
+                                            <td><b>{{ results_table.face_check_image_height }} </b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="20%">检测结果:</td>
+                                            <td><b>{% ifequal results_table.face_check_results_status 1 %} 检测完成
+                                                {% else %} 检测暂未完成，请稍后 {% endifequal %}</b>
+                                            </td>
+                                        </tr>
+                            
+                                        <tr>
+                                            <td width="20%">完成时间:</td>
+                                            <td><b>{{ results_table.ctime }} </b>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {% block footer-js %}
+
+
+        <script>
+
+
+            $(function () {
+                $('.asset_del').click(function () {
+                    swal({
+
+                        title: "你确定删除",
+                        text: "你将无法恢复",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定",
+                        closeOnConfirm: false
+                    }, function () {
+                        $.ajax({
+                            url: "/asset/asset-all-del.html",
+                            type: 'POST',
+                            data: {'nid': {{  nid }}},
+                            success: function (data) {
+
+                                var obj = JSON.parse(data);
+                                if (obj.status) {
+                                    swal({title: "删除", text: "已成功删除", type: "success"}, function () {
+                                        location.href = "{% url "face:face_check_list" %}"
+                                    })
+                                } else {
+                                    swal("错误", "删除" + "[ " + obj.error + " ]" + "遇到错误", "error");
+                                }
+                            }
+                        });
+
+
+                    });
+                });
+
+                     $('.asset_hardware_update').click(function () {
+
+
+                 toastr.options = {
+                                      "closeButton": true,
+                                      "debug": false,
+                                      "progressBar": true,
+                                      "preventDuplicates": true,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "400",
+                                      "hideDuration": "1000",
+                                      "timeOut": "7000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                    };
+
+
+
+
+
+                    $.ajax({
+                        url: "/asset/asset-hardware-update.html",
+                        type: 'POST',
+                        data: {'nid': {{  nid }}},
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            if (obj.status) {
+                                toastr.info("如未更新，请查看定时任务--周期结果","后台异步获取信息中,请稍后查看!");
+                            } else {
+                                $('#error2').text(obj.error);
+                                 toastr.error(obj.error);
+                            }
+                        }
+                    })
+                });
+
+            });
+
+
+        </script>
+
+
+    {% endblock %}
+
+
+{% endblock %}
+
+

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load  bootstrap3 %}
+{% block  title %} 论文 | Medusa {% endblock %}
+
+
+{% block header-css %}
+
+{% endblock %}
+
+
+{% block page-content %}
+<div class="wrapper wrapper-content">
+
+
+
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="static/demo/face_check.jpg" height="400" width="400"  alt="人脸检测">
+            <div class="caption">
+            <h3>人脸检测</h3>
+            <p>检测给定图片中的所有人脸( Face )的位置和相应的面部属性，位置包括(x, y, w, h)，面部属性包括性别( gender ), 年龄( age ), 表情( expression ), 魅力( beauty ), 眼镜( glass )和姿态 (pitch，roll，yaw )</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'face:face_check_list' %}" role="button">Learn more</a></p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="static/demo/face_diff.jpg"  height="400" width="400"  alt="...">
+            <div class="caption">
+            <h3>人脸对比</h3>
+            <p> 通过计算上传的每张人脸的脸部特征数据，提取特征点，然后将人脸的信息提取成一个128维的向量空间。在这个向量空间上，同一个人脸的更接近，不同人脸的距离更远。度量采用欧式距离计算方法。</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'face:face_diff_list' %}" role="button">Learn more</a></p>
+        </div>
+        </div>
+        </div>
+
+
+        <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="static/demo/face_core_body.png" alt="...">
+            <div class="caption">
+            <h3>人脸核身</h3>
+            <p>捕获当前用户照片并与公民身份照片进行比对，实现在线用户身份验证。人脸核身方案能够帮助您识别业务场景中的用户，是否为「真人」且为「本人」，从而更加快捷地完成身份核实工作，大大提高业务处理效率，减少人工成本 </p>
+            <p><a class="btn btn-primary btn-lg" href="{% url  'face:face_core_body_list' %}" role="button">Learn more</a></p>
+        </div>
+        </div>
+        </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block footer-js %}
+
+<script>
+
+
+toastr.options = {
+                                      "closeButton": true,
+                                      "debug": false,
+                                      "progressBar": true,
+                                      "preventDuplicates": true,
+                                      "positionClass": "toast-top-right",
+                                      "onclick": null,
+                                      "showDuration": "400",
+                                      "hideDuration": "1000",
+                                      "timeOut": "7000",
+                                      "extendedTimeOut": "1000",
+                                      "showEasing": "swing",
+                                      "hideEasing": "linear",
+                                      "showMethod": "fadeIn",
+                                      "hideMethod": "fadeOut"
+                                    };
+toastr.success("欢迎登录kernycai 论文答辩系统", "欢迎")
+
+</script>
+{% endblock %}

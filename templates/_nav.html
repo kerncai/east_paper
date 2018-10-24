@@ -1,0 +1,69 @@
+<nav class="navbar-default navbar-static-side  " role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                                    class="font-bold">{{ user }}</strong>
+
+                             </span> <span class="text-muted text-xs block">
+                                {% ifequal  user.is_superuser  1 %}
+                                    管理员 {% else %} 普通用户 {% endifequal %}
+                                <b class="caret"></b></span> </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="{% url  "password_update" %}">修改密码</a></li>
+                        <li><a href="/logout.html">登出</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    Medusa
+                </div>
+            </li>
+            <li class="{{ index_view_active }}">
+                <a href="{% url "index" %}"><i class="fa fa-dashboard"></i> <span class="nav-label">首页</span>
+                </a>
+
+            </li>
+            <li class="{{ face_active }}">
+                <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">人脸识别</span>
+                    <span class="fa arrow"> </span></a>
+                <ul class="nav nav-second-level">
+                <li class="{{ face_images_upload_active }}"><a href="{% url 'face:face_images_upload' %}">人脸上传</a></li>
+                <li class="{{  face_check_list_active }}"><a href="{% url 'face:face_check_list' %}">人脸检测</a></li>
+                <li class="{{  face_diff_list_active }}"><a href="{% url  'face:face_diff_list' %}">人脸对比</a></li>
+                <li class="{{  face_core_body_list_active }}"><a href="{% url  'face:face_core_body_list' %}">人脸核身</a></li>
+
+                </ul>
+            </li>
+
+
+         {% ifequal  user.is_superuser  1 %}
+            <li class="{{ name_active }}">
+                <a href="#"><i class="fa fa-group"></i> <span class="nav-label">系统用户</span>
+                    <span class="fa arrow"> </span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ name_list_active }}"><a href="{% url  'name:name_list' %}">用户管理</a></li>
+                      <li class="{{ groups_list_active }}"><a href="{% url  'name:groups_list' %}">组管理</a></li>
+
+
+                </ul>
+            </li>
+
+            <li class="{{ index_active }}">
+                <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">后台管理</span>
+                    <span class="fa arrow"> </span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{{ index_login_active }}"><a href="{% url  'login-history' %}">平台登录</a></li>
+                    <li><a href="/admin" target="_blank">管理界面</a></li>
+
+                </ul>
+            </li>
+        {% endifequal %}
+        </ul>
+
+    </div>
+</nav>

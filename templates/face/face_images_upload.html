@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block  title %}人脸上传{% endblock %}
+{% block header-css %}
+    {% load bootstrap3 %}
+{% endblock %}
+
+
+{% block page-content %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>人脸上传</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index.html">主页</a>
+                </li>
+                <li>
+                    <a>人脸识别</a>
+                </li>
+                <li class="active">
+                    <strong>人脸上传</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>信息上传</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">选项 1</a>
+                            </li>
+                            <li><a href="#">选项 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <form enctype="multipart/form-data" method="post" class="form-horizontal" action="">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" style="margin: 20px auto 0px">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-0">
+                                <h3>基本</h3>
+
+                                {% bootstrap_field form.image_name layout="horizontal" %} 
+                                {% bootstrap_field form.face_action_type layout="horizontal" %}
+                                {% bootstrap_field form.face_image_path1 layout="horizontal" %}
+								<div id="rebuild"> <div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3 upload_summit">
+
+                                {% bootstrap_button "保存" button_type="submit" button_class="btn-primary" %}
+
+                                <a class="btn btn-white" href="{% url "face:face_images_upload" %}">取消</a>
+
+
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    {% block footer-js %}
+      <script>
+            $('button').click(function(){
+                alert('提交完成后请去分类的识别动作列表查看');
+                });
+            $("#id_face_action_type").change(function () {
+                var p1=$(this).children('option:selected').val();
+                var rebuild_div = document.getElementById("rebuild");
+                if ( p1== '1'){
+                    h = '<div class="form-group"><label class="col-md-3 control-label" for="id_face_image_path2">对比照片</label><div class="col-md-9"><div class="row bootstrap3-multi-input"><div class="col-xs-12"><input type="file" name="face_image_path2" id="id_face_image_path2" title="" class=""/></div></div></div></div>';
+                };
+                if ( p1 == '2'){
+                    h = '<div class="form-group"><label class="col-md-3 control-label" for="id_ID_card">姓名</label><div class="col-md-9"><input type="text" name="ID_card_name" id="id_ID_card_name" title="*姓名" maxlength="255" required class="form-control" placeholder="身份证姓名" ></div></div></div></div> <div class="form-group"><label class="col-md-3 control-label" for="id_ID_card">身份证号码</label><div class="col-md-9"><input type="text" name="ID_card" id="id_ID_card" title="*必填项目" maxlength="255" required class="form-control" placeholder="身份证号码"></div></div></div></div>'
+                };
+                if ( p1 == '0'){
+                    h = '';
+                
+                };
+                rebuild_div.innerHTML=h;
+            });
+            
+        </script>
+
+
+    {% endblock %}
+
+
+{% endblock %}
