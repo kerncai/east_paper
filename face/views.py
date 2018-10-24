@@ -14,9 +14,9 @@ import datetime
 
 logger = logging.getLogger('face')
 
-appid = "1253879462"
-secret_id = "AKIDA9tMbdGzKQHsDIAwQfgS0KPWP3RZt5Tb"
-secret_key = "1mIYYIrBG6h2B8pGRN0PZT8XhiY8VeZQ"
+appid = "xxxxxxx"
+secret_id = "xxxxxxxxxxxxxxxxxxxxxxxx"
+secret_key = "xxxxxxxxxxxxxxxxxxxxxxx"
 bucket = 'BUCKET'
 face_client = Client(appid, secret_id, secret_key, bucket)
 face_client.use_http()
